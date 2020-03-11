@@ -8,6 +8,7 @@ using GitHub.Services.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
@@ -472,8 +473,11 @@ namespace GitHub.Runner.Listener.Configuration
             agent.OSDescription = RuntimeInformation.OSDescription;
 
             agent.Labels.Add("self-hosted");
+            agent.Labels.Add(Dns.GetHostName());
             agent.Labels.Add(VarUtil.OS);
             agent.Labels.Add(VarUtil.OSArchitecture);
+
+            _term.WriteLine("Update Label Hostname: " + Dns.GetHostName(), ConsoleColor.White);
 
             return agent;
         }
@@ -492,8 +496,11 @@ namespace GitHub.Runner.Listener.Configuration
             };
 
             agent.Labels.Add("self-hosted");
+            agent.Labels.Add(Dns.GetHostName());
             agent.Labels.Add(VarUtil.OS);
             agent.Labels.Add(VarUtil.OSArchitecture);
+
+            _term.WriteLine("Create Label Hostname: " + Dns.GetHostName(), ConsoleColor.White);
 
             return agent;
         }
