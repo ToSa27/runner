@@ -95,7 +95,10 @@ namespace GitHub.Runner.Worker
                     if (step is IActionRunner actionStep)
                     {
                         // Set GITHUB_ACTION
-                        step.ExecutionContext.SetGitHubContext("action", actionStep.Action.Name);
+                        if (!string.IsNullOrEmpty(actionStep.Action.ContextName))
+                        {
+                            step.ExecutionContext.SetGitHubContext("action", actionStep.Action.ContextName);
+                        }
 
                         // Evaluate and merge action's env block to env context
                         var templateEvaluator = step.ExecutionContext.ToPipelineTemplateEvaluator();
